@@ -1,0 +1,47 @@
+﻿@model Dominio.Model.Atividade
+
+
+
+<h2>Atividade enviada com sucesso!</h2>
+<div class="row">
+    <div class="col-md-6">
+        <form >
+            <div class="input-group mb-3 input-group-sm">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Id da atividade:</span>
+                </div>
+                <input  asp-for="Id" type="text" class="form-control">
+            </div>
+            <div class="input-group mb-3 input-group-sm">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Registro de matrícula</span>
+                </div>
+                <input asp-for="RM" type="text" class="form-control">
+            </div>
+
+            <div class="input-group mb-3 input-group-sm">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Nome completo</span>
+                </div>
+                <input asp-for="Nome" type="text" class="form-control">
+            </div>
+            <div class="input-group mb-3 input-group-sm">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">URL github:</span>
+                </div>
+                <input asp-for="UrlGitHub" type="text" class="form-control">
+            </div>
+            <div class="input-group mb-3 input-group-sm">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Número atividade:</span>
+                </div>
+                <input asp-for="NumeroAtividade" value="1" type="text" class="form-control">
+            </div>
+            
+        </form>
+    </div>
+
+
+
+</div>
+
