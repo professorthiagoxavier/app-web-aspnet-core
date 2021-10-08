@@ -2,7 +2,7 @@
 
 namespace Dominio.Model
 {
-    public class Atividade
+    public class Atividade : Pagination<Atividade>
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

@@ -23,25 +23,30 @@ namespace Service.Atividade
 
         public async Task<IEnumerable<Dominio.Model.Atividade>> BuscarAtividades()
         {
-            using HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(_configuration["ClienteService:BaseUrl"]);
+            var httpClient = GetHttp();
             var response = await httpClient.GetAsync("atividade");
-
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
                 return null;
 
             var content = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<Dominio.Model.Atividade>(content);
+            return result.content;
+        }
 
-            var result = JsonSerializer.Deserialize<IEnumerable<Dominio.Model.Atividade>>(content);
-
-            return result;
+        private HttpClient GetHttp()
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(_configuration["ClienteService:BaseUrl"]);
+            var byteArray = Encoding.ASCII.GetBytes($"{_configuration["ClienteService:user"]}:{_configuration["ClienteService:password"]}");
+            var basicToken = Convert.ToBase64String(byteArray);
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", $"Basic {basicToken}");
+            return httpClient;
         }
 
         public async Task<Dominio.Model.Atividade> SalvarAtividade(Dominio.Model.Atividade atividade)
         {
-            using HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(_configuration["ClienteService:BaseUrl"]);
+            using var httpClient = GetHttp();
             using var content = new ByteArrayContent(GetByteData(atividade));
             content.Headers.ContentType = CONTENT_TYPE;
             var reponse = await httpClient.PostAsync("atividade", content);
